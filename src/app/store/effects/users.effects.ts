@@ -4,9 +4,10 @@ import { UserService } from 'src/app/services/user.service';
 
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 import * as userActions from '../actions';
+import { of } from 'rxjs';
 
 @Injectable()
 export class UserEffects {
@@ -16,9 +17,10 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(userActions.loadUsers),
       mergeMap(() =>
-        this.userService
-          .getUsers()
-          .pipe( map(users => userActions.loadUsersSuccess({ users })) )
+        this.userService.getUsers().pipe(
+          map((users) => userActions.loadUsersSuccess({ users })),
+          catchError((err: Error) => of(userActions.loadUsersError({ payload: err })))
+        )
       )
     )
   );
