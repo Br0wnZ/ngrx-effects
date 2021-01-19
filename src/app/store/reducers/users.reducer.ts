@@ -16,7 +16,7 @@ export const usersInitialState: UsersState = {
   error: null,
 };
 
-const _userReducer = createReducer(
+const _usersReducer = createReducer(
   usersInitialState,
 
   on(loadUsers, (state) => ({ ...state, loading: true })),
@@ -38,6 +38,6 @@ const _userReducer = createReducer(
   }))
 );
 
-export function userReducer(state, action) {
-  return _userReducer(state, action);
+export function usersReducer(state, action) {
+  return _usersReducer(state, action);
 }
