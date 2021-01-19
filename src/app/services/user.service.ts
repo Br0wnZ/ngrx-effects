@@ -13,8 +13,8 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers = (): Observable<User[]> =>
+  getUsers = (): Observable<any> =>
     this.http
       .get(`${this._url}/users?per_page=6`)
-      .pipe(map(({data}: any) => data as User[]));
+      .pipe(map(({data}: any) => data));
 }
