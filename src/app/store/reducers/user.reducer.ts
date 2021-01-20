@@ -4,7 +4,7 @@ import { loadUser, loadUserSuccess, loadUserError } from '../actions';
 import { User } from 'src/app/models/user.model';
 export interface UserState {
   id: string
-  users: User[]
+  user: User
   loaded: boolean
   loading: boolean
   error: any
@@ -12,7 +12,7 @@ export interface UserState {
 
 export const userInitialState: UserState = {
   id: null,
-  users: null,
+  user: null,
   loaded: false,
   loading: false,
   error: null,
@@ -27,11 +27,13 @@ const _userReducer = createReducer(
     loading: false,
     loaded: true,
     user: { ...user },
+    error: false
   })),
   on(loadUserError, (state, { payload }) => ({
     ...state,
     loading: false,
     loaded: false,
+    user: null,
     error: {
         url: payload.url,
         nanme: payload.name,

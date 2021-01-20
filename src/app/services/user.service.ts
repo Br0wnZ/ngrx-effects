@@ -9,12 +9,17 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class UserService {
-  private _url = 'https://reqres.in/api43';
+  private _url = 'https://reqres.in/api';
 
   constructor(private http: HttpClient) {}
 
   getUsers = (): Observable<any> =>
     this.http
       .get(`${this._url}/users?per_page=6&&delay=3`)
+      .pipe(map(({data}: any) => data));
+
+  getUserById = (id: string): Observable<any> =>
+    this.http
+      .get(`${this._url}/users/${id}?delay=2`)
       .pipe(map(({data}: any) => data));
 }

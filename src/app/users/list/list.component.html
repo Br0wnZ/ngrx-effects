@@ -14,7 +14,7 @@
 
 <div *ngIf="!loading"  class="card-columns">
 
-  <div class="card" *ngFor="let user of users" >
+  <div class="card baseBlock" *ngFor="let user of users" (click)="loadUserById(user.id)"  >
     <img class="card-img-top" [src]="user.avatar" [alt]="user.first_name">
     <div class="card-body">
       <h5 class="card-title">{{ user.first_name }}</h5>

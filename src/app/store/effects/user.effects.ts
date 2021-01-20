@@ -10,17 +10,18 @@ import * as userActions from '../actions';
 import { of } from 'rxjs';
 
 @Injectable()
-export class UsersEffects {
+export class UserEffects {
   constructor(private actions$: Actions, private userService: UserService) {}
 
-  loadUsers$ = createEffect(() =>
+  loadUse$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(userActions.loadUsers),
-      mergeMap(() =>
-        this.userService.getUsers().pipe(
-          map((users) => userActions.loadUsersSuccess({ users })),
-          catchError((err: Error) => of(userActions.loadUsersError({ payload: err })))
-        )
+      ofType(userActions.loadUser),
+      mergeMap(({ id }) =>
+      id ?
+        this.userService.getUserById( id ).pipe(
+          map((user) => userActions.loadUserSuccess({ user })),
+          catchError((err: Error) => of(userActions.loadUserError({ payload: err })))
+        ) : of(userActions.loadUserError({ payload: '' }))
       )
     )
   );
